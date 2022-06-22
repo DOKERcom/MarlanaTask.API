@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MarlanaTask.BLL\MarlanaTask.BLL.csproj" />
-    <ProjectReference Include="..\MarlanaTask.DAL\MarlanaTask.DAL.csproj" />
   </ItemGroup>
 
 </Project>
