@@ -15,7 +15,7 @@ namespace MarlanaTask.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false)
+                    Name = table.Column<string>(type: "character varying(25)", maxLength: 25, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,7 +28,7 @@ namespace MarlanaTask.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "character varying(25)", maxLength: 25, nullable: false),
                     Status = table.Column<bool>(type: "boolean", nullable: false),
                     TasksBlockEntityId = table.Column<int>(type: "integer", nullable: true)
                 },
@@ -43,9 +43,21 @@ namespace MarlanaTask.DAL.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Tasks_Name",
+                table: "Tasks",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tasks_TasksBlockEntityId",
                 table: "Tasks",
                 column: "TasksBlockEntityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TasksBlocks_Name",
+                table: "TasksBlocks",
+                column: "Name",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

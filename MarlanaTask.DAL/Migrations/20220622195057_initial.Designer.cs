@@ -12,7 +12,7 @@ using Task.DAL.DbContexts;
 namespace MarlanaTask.DAL.Migrations
 {
     [DbContext(typeof(MarlanaTaskDbContext))]
-    [Migration("20220622184151_initial")]
+    [Migration("20220622195057_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,8 @@ namespace MarlanaTask.DAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(25)
+                        .HasColumnType("character varying(25)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("boolean");
@@ -43,6 +44,9 @@ namespace MarlanaTask.DAL.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.HasIndex("TasksBlockEntityId");
 
@@ -59,9 +63,13 @@ namespace MarlanaTask.DAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(25)
+                        .HasColumnType("character varying(25)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("TasksBlocks");
                 });

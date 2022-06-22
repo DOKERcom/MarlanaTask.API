@@ -20,46 +20,46 @@ namespace Task.DAL.Repositories.Implementations
         }
 
 
-        public async void CreateTasksBlockAsync(TasksBlockEntity entity)
+        public async Task<int> CreateTasksBlockAsync(TasksBlockEntity entity)
         {
             db.TasksBlocks.Add(entity);
-            await db.SaveChangesAsync();
+            return await db.SaveChangesAsync();
         }
 
-        public async void DeleteTasksBlockAsync(TasksBlockEntity entity)
+        public async Task<int> DeleteTasksBlockAsync(TasksBlockEntity entity)
         {
             db.TasksBlocks.Remove(entity);
-            await db.SaveChangesAsync();
+            return await db.SaveChangesAsync();
         }
 
-        public async void UpdateNameTasksBlockAsync(TasksBlockEntity entity)
+        public async Task<int> UpdateTasksBlockAsync(TasksBlockEntity entity)
         {
             db.TasksBlocks.Update(entity);
-            await db.SaveChangesAsync();
+            return await db.SaveChangesAsync();
         }
 
-        public async Task<TasksBlockEntity> GetTasksBlockByNameAsync(string name)
+        public async Task<TasksBlockEntity?> GetTasksBlockByNameAsync(string name)
         {
-            return await db.TasksBlocks.Where(t=>t.Name == name).FirstOrDefaultAsync();
+            return await db.TasksBlocks.Include(t => t.Tasks).Where(t=>t.Name == name).FirstOrDefaultAsync();
         }
 
-        public async Task<TasksBlockEntity> GetTasksBlockByIdAsync(int id)
+        public async Task<TasksBlockEntity?> GetTasksBlockByIdAsync(int id)
         {
-            return await db.TasksBlocks.Where(t => t.Id == id).FirstOrDefaultAsync();
+            return await db.TasksBlocks.Include(t=>t.Tasks).Where(t => t.Id == id).FirstOrDefaultAsync();
         }
 
-        public async void AddTaskAsync(TaskEntity taskEntity, TasksBlockEntity blockEntity)
+        public async Task<int> AddTaskAsync(TaskEntity taskEntity, TasksBlockEntity blockEntity)
         {
             blockEntity.Tasks.Add(taskEntity);
             db.TasksBlocks.Update(blockEntity);
-            await db.SaveChangesAsync();
+            return await db.SaveChangesAsync();
         }
 
-        public async void RemoveTaskAsync(TaskEntity taskEntity, TasksBlockEntity blockEntity)
+        public async Task<int> RemoveTaskAsync(TaskEntity taskEntity, TasksBlockEntity blockEntity)
         {
             blockEntity.Tasks.Remove(taskEntity);
             db.TasksBlocks.Update(blockEntity);
-            await db.SaveChangesAsync();
+            return await db.SaveChangesAsync();
         }
     }
 }

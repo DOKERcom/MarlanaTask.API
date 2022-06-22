@@ -18,27 +18,32 @@ namespace Task.DAL.Repositories.Implementations
             db = context;
         }
 
-        public async void CreateTask(TaskEntity entity)
+        public async Task<int> CreateTaskAsync(TaskEntity entity)
         {
             db.Tasks.Add(entity);
-            await db.SaveChangesAsync();
+            return await db.SaveChangesAsync();
         }
 
-        public async void UpdateTask(TaskEntity entity)
+        public async Task<int> UpdateTaskAsync(TaskEntity entity)
         {
             db.Tasks.Update(entity);
-            await db.SaveChangesAsync();
+            return await db.SaveChangesAsync();
         }
 
-        public async void DeleteTask(TaskEntity entity)
+        public async Task<int> DeleteTaskAsync(TaskEntity entity)
         {
             db.Tasks.Remove(entity);
-            await db.SaveChangesAsync();
+            return await db.SaveChangesAsync();
         }
 
-        public async Task<TaskEntity?> DeleteTask(string name)
+        public async Task<TaskEntity?> GetTaskByNameAsync(string name)
         {
             return await db.Tasks.Where(t => t.Name == name).FirstOrDefaultAsync();
+        }
+
+        public async Task<TaskEntity?> GetTaskByIdAsync(int id)
+        {
+            return await db.Tasks.Where(t => t.Id == id).FirstOrDefaultAsync();
         }
     }
 }
