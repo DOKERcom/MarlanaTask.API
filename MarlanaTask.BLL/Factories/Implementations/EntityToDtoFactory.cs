@@ -1,4 +1,5 @@
-﻿using MarlanaTask.BLL.Models.DTO;
+﻿using MarlanaTask.BLL.Factories.Interfaces;
+using MarlanaTask.BLL.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using Task.DAL.Entities;
 
 namespace MarlanaTask.BLL.Factories.Implementations
 {
-    public class EntityToDtoFactory
+    public class EntityToDtoFactory : IEntityToDtoFactory
     {
         public TaskDTO TaskEntityToDto(TaskEntity entity)
         {
@@ -25,7 +26,7 @@ namespace MarlanaTask.BLL.Factories.Implementations
         public TasksBlockDTO TasksBlockEntityToDto(TasksBlockEntity entity)
         {
             TasksBlockDTO tasksBlockDto = new TasksBlockDTO()
-            {
+            { 
                 Name = entity.Name,
                 Tasks = TasksToDtoEntities(entity.Tasks),
             };

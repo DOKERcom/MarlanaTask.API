@@ -9,9 +9,9 @@ namespace Task.DAL.Repositories.Interfaces
     {
         public Task<int> CreateTaskAsync(TaskEntity entity);
 
-        public Task<int> UpdateTaskAsync(TaskEntity entity);
+        public Task<int> UpdateTaskAsync(string name, bool status);
 
-        public Task<int> DeleteTaskAsync(TaskEntity entity);
+        public Task<int> DeleteTaskAsync(string name);
 
         public Task<TaskEntity?> GetTaskByNameAsync(string name);
 

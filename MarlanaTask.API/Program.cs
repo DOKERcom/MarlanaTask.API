@@ -1,14 +1,25 @@
+using MarlanaTask.API.Factories.Interfaces;
+using MarlanaTask.BLL.Factories.Implementations;
+using MarlanaTask.BLL.Factories.Interfaces;
+using MarlanaTask.BLL.Services.Implementations;
+using MarlanaTask.BLL.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Task.BLL.Services.Implementations;
+using Task.BLL.Services.Interfaces;
 using Task.DAL.DbContexts;
 using Task.DAL.Repositories.Implementations;
 using Task.DAL.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin()));
+
+builder.Services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyMethod()));
+
+builder.Services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyHeader()));
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -19,9 +30,18 @@ builder.Services.AddDbContext<MarlanaTaskDbContext>(options => options.UseNpgsql
 builder.Services.AddScoped<ITasksBlockRepository, TasksBlockRepository>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 
+builder.Services.AddScoped<ITasksBlockService, TasksBlockService>();
+builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<IBlockAndTaskService, BlockAndTaskService>();
+
+builder.Services.AddScoped<IDtoToEntityFactory, DtoToEntityFactory>();
+builder.Services.AddScoped<IEntityToDtoFactory, EntityToDtoFactory>();
+
+builder.Services.AddScoped<IModelToDtoFactory, ModelToDtoFactory>();
+builder.Services.AddScoped<IDtoToModelFactory, DtoToModelFactory>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -29,6 +49,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseCors(builder => builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 
 app.UseAuthorization();
 

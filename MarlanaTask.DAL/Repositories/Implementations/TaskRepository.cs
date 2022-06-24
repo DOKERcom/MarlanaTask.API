@@ -24,15 +24,25 @@ namespace Task.DAL.Repositories.Implementations
             return await db.SaveChangesAsync();
         }
 
-        public async Task<int> UpdateTaskAsync(TaskEntity entity)
+        public async Task<int> UpdateTaskAsync(string name, bool status)
         {
-            db.Tasks.Update(entity);
-            return await db.SaveChangesAsync();
+            var task = db.Tasks.FirstOrDefault(t => t.Name == name);
+
+            if (task != null)
+            {
+                task.Status = status;
+
+                db.Tasks.Update(task);
+
+                return await db.SaveChangesAsync();
+            }
+            return 0;
         }
 
-        public async Task<int> DeleteTaskAsync(TaskEntity entity)
+        public async Task<int> DeleteTaskAsync(string name)
         {
-            db.Tasks.Remove(entity);
+            db.Tasks.Remove(db.Tasks.FirstOrDefault(t=>t.Name == name));
+
             return await db.SaveChangesAsync();
         }
 

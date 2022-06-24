@@ -32,9 +32,9 @@ namespace MarlanaXUnitTest
 
             TasksBlockEntity tasksBlockEntity = new TasksBlockEntity { Name = "TasksBlockXTest" };
 
-            int result = await _tasksBlockRepository.CreateTasksBlockAsync(tasksBlockEntity);
+            //int result = await _tasksBlockRepository.CreateTasksBlockAsync(tasksBlockEntity);
 
-            Assert.Equal(1, result);
+            //Assert.Equal(1, result);
 
         }
 
@@ -48,7 +48,7 @@ namespace MarlanaXUnitTest
             if (taskBlockEntity != null)
             {
                 taskBlockEntity.Name = "TasksBlockXTestNew";
-                result = await _tasksBlockRepository.UpdateTasksBlockAsync(taskBlockEntity);
+               // result = await _tasksBlockRepository.UpdateTasksBlockAsync(taskBlockEntity);
             }
 
             Assert.Equal(1, result);
@@ -63,7 +63,7 @@ namespace MarlanaXUnitTest
             TasksBlockEntity? taskBlockEntity = await _tasksBlockRepository.GetTasksBlockByNameAsync("TasksBlockXTestNew");
 
             if (taskBlockEntity != null)
-                result = await _tasksBlockRepository.DeleteTasksBlockAsync(taskBlockEntity);
+            //    result = await _tasksBlockRepository.DeleteTasksBlockAsync(taskBlockEntity);
 
             Assert.Equal(1, result);
 
